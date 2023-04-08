@@ -1,0 +1,8 @@
+# Analogy for difference between Sync and Async
+Sync and Async are like in the post office.
+Sync - When you go to take your package you wait inline till your number comes and
+then you are served (wasting time and stopping all your daily tasks).
+
+Async -  you get your number via SMS and you keep with the rest of the
+day and when your turn arrives you get a message on your phone to come
+and get your package.
