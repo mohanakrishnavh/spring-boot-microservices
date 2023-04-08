@@ -1,4 +1,4 @@
-package io.emkae.movieinfoservice.model;
+package io.emkae.moviecatalogservice.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,10 +7,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Movie {
+public class Rating {
 
     private String movieId;
-    private String name;
-    private String description;
+    private int rating;
 
 }

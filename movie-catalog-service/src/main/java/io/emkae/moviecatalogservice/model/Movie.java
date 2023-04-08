@@ -1,16 +1,15 @@
-package io.emkae.movieinfoservice.model;
+package io.emkae.moviecatalogservice.model;
 
+
+import lombok.Data;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Movie {
-
     private String movieId;
     private String name;
     private String description;
-
 }
