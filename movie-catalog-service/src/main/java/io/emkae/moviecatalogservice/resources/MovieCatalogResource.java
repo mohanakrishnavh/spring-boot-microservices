@@ -24,10 +24,6 @@ public class MovieCatalogResource {
     @Autowired
     private RestTemplate restTemplate;
 
-    // To use custom load balancing and call specific service clients
-    @Autowired
-    private DiscoveryClient discoveryClient;
-
     @Autowired
     private WebClient.Builder webClientBuilder;
 
