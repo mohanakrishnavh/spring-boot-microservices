@@ -31,11 +31,11 @@ public class MovieCatalogResource {
         log.info("Request catalog information for user : {}", userId);
 
         List<CatalogItem> catalogItems = new ArrayList<>();
-        UserRating userRating = restTemplate.getForObject("http://localhost:8083/ratings/user/" + userId, UserRating.class);
+        UserRating userRating = restTemplate.getForObject("http://ratings-data-service/ratings/user/" + userId, UserRating.class);
 
         if (userRating != null) {
             for (Rating rating : userRating.getRatings()) {
-                Movie movie = restTemplate.getForObject("http://localhost:8082/movies/" + rating.getMovieId(), Movie.class);
+                Movie movie = restTemplate.getForObject("http://movie-info-service/movies/" + rating.getMovieId(), Movie.class);
 
                 if (movie != null) {
                     catalogItems.add(new CatalogItem(movie.getName(), movie.getDescription(), rating.getRating()));
