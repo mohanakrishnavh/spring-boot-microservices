@@ -2,11 +2,12 @@ package io.emkae.moviecatalogservice.model;
 
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Rating {
-    private String movieId;
+public class UserRating {
     private String userId;
-    private int rating;
+    private List<Rating> ratings;
 }

@@ -4,11 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
-public class Rating {
-    private String movieId;
+public class UserRating {
     private String userId;
-    private int rating;
+    private List<Rating> ratings;
 }
