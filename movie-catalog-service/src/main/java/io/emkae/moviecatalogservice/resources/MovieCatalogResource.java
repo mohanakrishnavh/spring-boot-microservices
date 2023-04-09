@@ -1,5 +1,6 @@
 package io.emkae.moviecatalogservice.resources;
 
+import com.netflix.discovery.DiscoveryClient;
 import io.emkae.moviecatalogservice.model.CatalogItem;
 import io.emkae.moviecatalogservice.model.Movie;
 import io.emkae.moviecatalogservice.model.Rating;
@@ -22,6 +23,10 @@ public class MovieCatalogResource {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    // To use custom load balancing and call specific service clients
+    @Autowired
+    private DiscoveryClient discoveryClient;
 
     @Autowired
     private WebClient.Builder webClientBuilder;
