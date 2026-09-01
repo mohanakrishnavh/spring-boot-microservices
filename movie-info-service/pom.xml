@@ -16,6 +16,11 @@
 	<properties>
 		<java.version>20</java.version>
 		<spring-cloud.version>2022.0.2</spring-cloud.version>
+		<!-- The Lombok version pulled in by spring-boot-starter-parent 3.0.5
+		     predates JDK 21 support (Lombok added it in 1.18.30); building
+		     with a JDK 21 javac fails with NoSuchFieldError on
+		     JCTree$JCImport. Pin explicitly to a version that supports it. -->
+		<lombok.version>1.18.34</lombok.version>
 	</properties>
 	<dependencies>
 		<dependency>

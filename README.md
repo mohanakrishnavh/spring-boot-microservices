@@ -14,6 +14,7 @@ A demonstration of microservices architecture using Spring Boot and Spring Cloud
 - [API Documentation](#api-documentation)
 - [Technology Stack](#technology-stack)
 - [Getting Started](#getting-started)
+- [Automated Tests](#automated-tests)
 - [Service Configuration](#service-configuration)
 
 ---
@@ -496,6 +497,55 @@ Expected Response for user 1000:
   }
 ]
 ```
+
+---
+
+## 🧪 Automated Tests
+
+The manual `curl` walkthrough above verifies the running system end-to-end;
+this section covers the automated test suite that runs without starting
+any services.
+
+```bash
+# From each service directory
+mvn test
+```
+
+`discovery-server` keeps its generated `contextLoads()` test — it's a
+Eureka server bootstrap with no business logic of its own to test beyond
+"does the Spring context start." The other three services now have real
+tests alongside their `contextLoads()` checks:
+
+| Service | Test class | Covers |
+|---|---|---|
+| `movie-info-service` | `MovieResourceTest` | Each hardcoded movie is returned correctly; an unknown movie ID returns an empty 200 body (documented current behavior, not a 404) |
+| `ratings-data-service` | `RatingsResourceTest` | Per-user rating lookups return the right list in order; an unknown user gets a null `ratings` field; documents that `getRatingByMovieId` returns the same hardcoded rating regardless of which movie is requested |
+| `movie-catalog-service` | `MovieCatalogResourceTest` | **The service's actual point** — the fan-out that calls ratings-data-service, then movie-info-service per rating, and assembles the catalog. Mocks `RestTemplate` (no Eureka needed) and covers the happy path, an empty-ratings response, and a rating whose movie lookup comes back empty (the controller's `if (movie != null)` guard should drop it) |
+
+All three use `@WebMvcTest` — a fast slice test covering just the
+controller and its mocked collaborators, not the full Spring context (so
+no Eureka client, no "connection refused to localhost:8761" log noise
+that `@SpringBootTest` produces when no discovery server is running).
+
+Each real test was verified to actually catch a bug, not just pass by
+construction: temporarily broke the corresponding production code
+(flipped `movie-catalog-service`'s null-check, changed a hardcoded
+description) and confirmed the right test failed, then reverted.
+
+### A build fix you'll need if you're on a current JDK
+
+All three Lombok-using services (`movie-catalog-service`,
+`movie-info-service`, `ratings-data-service`) pin
+`<lombok.version>1.18.34</lombok.version>` in their `pom.xml`. Without
+it, `mvn test`/`mvn compile` fails on **JDK 21+** with:
+
+```
+NoSuchFieldError: Class com.sun.tools.javac.tree.JCTree$JCImport does not have member field 'qualid'
+```
+
+The Lombok version `spring-boot-starter-parent:3.0.5` manages predates
+Lombok's JDK 21 support (added in 1.18.30). If you're building with JDK
+17 or 20 this override is a no-op; it only matters on 21+.
 
 ---
 
