@@ -1,5 +1,7 @@
 # Spring Boot Microservices Architecture
 
+[![CI](https://github.com/mohanakrishnavh/spring-boot-microservices/actions/workflows/ci.yml/badge.svg)](https://github.com/mohanakrishnavh/spring-boot-microservices/actions/workflows/ci.yml)
+
 A demonstration of microservices architecture using Spring Boot and Spring Cloud Netflix stack, implementing a movie catalog system with service discovery and inter-service communication.
 
 ## 📋 Table of Contents
